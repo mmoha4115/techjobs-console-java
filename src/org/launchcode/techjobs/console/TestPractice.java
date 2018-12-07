@@ -41,6 +41,8 @@ public class TestPractice {
         System.out.print("Enter a searchField");
         String searchField = scanner.nextLine();
 //{position type= name=, employer=DST, location=, core competency=}
+       ArrayList <HashMap<String,String>> resultmap = new ArrayList<HashMap<String, String>>();
+       ArrayList<TreeMap<String,String>> resultMap = new ArrayList<TreeMap<String, String>>();
         ArrayList<HashMap<String, String>> allJobs = JobData.findAll();
         for (int i = 0; i < allJobs.size(); i++) {
             HashMap<String, String> aJob = allJobs.get(i);
@@ -48,17 +50,27 @@ public class TestPractice {
                 String avalueOfAField = afieldOfAJob.getValue();
                 avalueOfAField = avalueOfAField.toLowerCase();
                 String aKeyOfAField = afieldOfAJob.getKey();
+                int count = 0;
                 if (aKeyOfAField.equals(searchField)) {
-                    if (avalueOfAField.contains(searchTerm)) { //this solves getting a search from all.
+                    if (avalueOfAField.contains(searchTerm)) {//this solves getting a search from all.
+                        HashMap <String,String> result = new HashMap<>();
+                        TreeMap<String,String> result2 = new TreeMap<>();
                         for (Map.Entry<String, String> aFieldOfAJob : aJob.entrySet()) {
-                            System.out.println(aFieldOfAJob.getKey() + " : " + aFieldOfAJob.getValue());
+//                            System.out.println(aFieldOfAJob.getKey() + " : " + aFieldOfAJob.getValue());
+                            result.put(aFieldOfAJob.getKey(), aFieldOfAJob.getValue());
+                            result2.put(aFieldOfAJob.getKey(),aFieldOfAJob.getValue());
                         }
-                        System.out.println("\n**********\n");
+                        resultmap.add(result);
+                        resultMap.add(result2);
+//                        System.out.println(resultmap);
+//                        System.out.println("\n**********\n");
                         break;
                     }
                 }
             }
         }
+        System.out.println(resultMap);
+        System.out.println(resultmap);
 
     }
 }
