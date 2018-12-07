@@ -60,11 +60,12 @@ public class TechJobs {
                 // What is their search term?
                 System.out.println("\nSearch term: ");
                 String searchTerm = in.nextLine();
+                searchTerm = searchTerm.toLowerCase();
 
                 if (searchField.equals("all")) {
-                    System.out.println("Search all fields not yet implemented. why!!!");
+                    JobData.findByValue(JobData.findAll(),searchTerm);
                 } else {
-                    printJobs(JobData.findByColumnAndValue(searchField, searchTerm));
+                    JobData.findByValueByField(JobData.findAll(),searchTerm,searchField);
                 }
             }
         }
@@ -110,14 +111,15 @@ public class TechJobs {
     }
 
     // Print a list of jobs
-    private static void printJobs(ArrayList<HashMap<String, String>> someJobs) {
-        for (int i = 0; i < someJobs.size(); i++) {
-            HashMap<String, String> post = someJobs.get(i);
-//          System.out.println(post.containsValue("java"));
-            System.out.println("\n\t***************\n");
-            for (Map.Entry<String, String> fields : post.entrySet()) {
-                System.out.println(fields.getKey() + " : " + fields.getValue());
-            }
+    private static void printJobs(ArrayList<HashMap<String, String>> allJobs) {
+        System.out.println("***************\n");
+        for (int i = 0; i < allJobs.size(); i++) {
+            HashMap<String, String> aJob = allJobs.get(i);
+            for (Map.Entry<String, String> aFieldOfAJob : aJob.entrySet()) {
+                System.out.println(aFieldOfAJob.getKey() + " : " + aFieldOfAJob.getValue());
+            }System.out.println("\n***************\n");
         }
     }
+
+
 }

@@ -1,9 +1,7 @@
 package org.launchcode.techjobs.console;
 
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class TestPractice {
     public static void main(String[] args) {
@@ -37,29 +35,31 @@ public class TestPractice {
 //        for (String i : sent) {
 //            System.out.println(i);
 //        }
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter a searchTerm:  ");
+        String searchTerm = scanner.nextLine();
+        System.out.print("Enter a searchField");
+        String searchField = scanner.nextLine();
+//{position type= name=, employer=DST, location=, core competency=}
+        ArrayList<HashMap<String, String>> allJobs = JobData.findAll();
+        for (int i = 0; i < allJobs.size(); i++) {
+            HashMap<String, String> aJob = allJobs.get(i);
+            for (Map.Entry<String, String> afieldOfAJob : aJob.entrySet()) {
+                String avalueOfAField = afieldOfAJob.getValue();
+                avalueOfAField = avalueOfAField.toLowerCase();
+                String aKeyOfAField = afieldOfAJob.getKey();
+                if (aKeyOfAField.equals(searchField)) {
+                    if (avalueOfAField.contains(searchTerm)) { //this solves getting a search from all.
+                        for (Map.Entry<String, String> aFieldOfAJob : aJob.entrySet()) {
+                            System.out.println(aFieldOfAJob.getKey() + " : " + aFieldOfAJob.getValue());
+                        }
+                        System.out.println("\n**********\n");
+                        break;
+                    }
+                }
+            }
+        }
 
-        ArrayList<HashMap<String,String>> somejobs = JobData.findAll();
-        System.out.println(somejobs);
-      for(int i = 0;i < somejobs.size();i++){
-          HashMap<String,String> post = somejobs.get(i);
-//          System.out.println(post.containsValue("java"));
-          System.out.println("\n\t***************\n");
-          for(Map.Entry<String,String> fields:post.entrySet()){
-//              System.out.println(fields.getKey()+" : "+fields.getValue());
-              System.out.println("whaaat");
-              String avalue = fields.getValue();
-              String akey = fields.getKey();
-              System.out.println(akey);
-              if(akey.equals("position type")) {
-                  if (avalue.contains("Data")) { //this solves getting a search from all.
-                      System.out.println(post);
-                      break;
-                  }
-              }
-
-              System.out.println("Not find");
-              }
-          }
-
-      }
     }
+}
+

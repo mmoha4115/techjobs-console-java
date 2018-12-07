@@ -10,6 +10,7 @@ import java.io.Reader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by LaunchCode
@@ -57,12 +58,12 @@ public class JobData {
     /**
      * Returns results of search the jobs data by key/value, using
      * inclusion of the search term.
-     *
+     * <p>
      * For example, searching for employer "Enterprise" will include results
      * with "Enterprise Holdings, Inc".
      *
-     * @param column   Column that should be searched.
-     * @param value Value of teh field to search for
+     * @param column Column that should be searched.
+     * @param value  Value of teh field to search for
      * @return List of all jobs matching the criteria
      */
     public static ArrayList<HashMap<String, String>> findByColumnAndValue(String column, String value) {
@@ -124,5 +125,41 @@ public class JobData {
             e.printStackTrace();
         }
     }
-
+//  search value in all fields
+    public static void findByValue(ArrayList<HashMap<String, String>> allJobs,String searchTerm) {
+        for (int i = 0; i < allJobs.size(); i++) {
+            HashMap<String, String> aJob = allJobs.get(i);
+            for (Map.Entry<String, String> afieldOfAJob : aJob.entrySet()) {
+                String avalueOfAField = afieldOfAJob.getValue();
+                avalueOfAField = avalueOfAField.toLowerCase();
+                if (avalueOfAField.contains(searchTerm)) { //this solves getting a search from all.
+                    for (Map.Entry<String,String> aFieldOfAJob:aJob.entrySet()){
+                        System.out.println(aFieldOfAJob.getKey()+" : "+aFieldOfAJob.getValue());
+                    }
+                    System.out.println("\n**********\n");
+                    break;
+                }
+            }
+        }
+    }
+//  search value in specified field
+    public static void findByValueByField(ArrayList<HashMap<String,String>> allJobs,String searchTerm,String searchField){
+        for (int i = 0; i < allJobs.size(); i++) {
+            HashMap<String, String> aJob = allJobs.get(i);
+            for (Map.Entry<String, String> afieldOfAJob : aJob.entrySet()) {
+                String avalueOfAField = afieldOfAJob.getValue();
+                avalueOfAField = avalueOfAField.toLowerCase();
+                String aKeyOfAField = afieldOfAJob.getKey();
+                if (aKeyOfAField.equals(searchField)) {
+                    if (avalueOfAField.contains(searchTerm)) {
+                        for (Map.Entry<String, String> aFieldOfAJob : aJob.entrySet()) {
+                            System.out.println(aFieldOfAJob.getKey() + " : " + aFieldOfAJob.getValue());
+                        }
+                        System.out.println("\n**********\n");
+                        break; //break the for loop - prevents duplicate
+                    }
+                }
+            }
+        }
+    }
 }
